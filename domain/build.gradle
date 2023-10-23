@@ -11,6 +11,7 @@ java {
 
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    implementation project(path: ':data:data')
 
     kapt("com.google.dagger:dagger-compiler:2.44")
     implementation("com.google.dagger:dagger:2.44")
