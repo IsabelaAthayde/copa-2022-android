@@ -21,7 +21,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val getMatchesUseCase: GetMatchesUseCase,
     private val disableNotificationUseCase: DisableNotificationUseCase,
-    private val enableNotificationUseCase: EnableNotificationUseCase
+    private val enableNotificationUseCase: EnableNotificationUseCase,
 ) : BaseViewModel<MainUiState, MainUiAction>(MainUiState()) {
 
     init {

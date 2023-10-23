@@ -1,22 +1,14 @@
+package me.dio.copa.catar.domain.usecase
+
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
-import me.dio.copa.catar.data.source.MatchesDataSource
 import me.dio.copa.catar.domain.model.Match
+import me.dio.copa.catar.domain.repositories.MatchesRepository
+import javax.inject.Inject
 
-class GetMatchesUseCase(
-    private val localDataSource: MatchesDataSource.Local,
-    private val remoteDataSource: MatchesDataSource.Remote
+class GetMatchesUseCase @Inject constructor(
+    private val repository: MatchesRepository
 ) {
-    fun getMatches(): Flow<List<Match>> {
-        val localMatches = localDataSource.getMatches()
-        val remoteMatches = remoteDataSource.getRemoteMatches()
-
-        return localMatches.combine(remoteMatches) { local, remote ->
-            if (local.isEmpty()) {
-                remote
-            } else {
-                local
-            }
-        }
+    suspend operator fun invoke(): Flow<List<Match>> {
+        return repository.getMatches()
     }
 }

@@ -2,16 +2,7 @@ package me.dio.copa.catar.features
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
@@ -43,14 +34,14 @@ fun MainScreen(matches: List<MatchDomain>, onNotificationClick: NotificationOnCl
     ) {
         LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             items(matches) { match ->
-                CopaCatarMatchInfo(match, onNotificationClick)
+                MatchInfo(match, onNotificationClick)
             }
         }
     }
 }
 
 @Composable
-fun CopaCatarMatchInfo(match: MatchDomain, onNotificationClick: NotificationOnClick) {
+fun MatchInfo(match: MatchDomain, onNotificationClick: NotificationOnClick) {
     Card(
         shape = Shapes.large,
         modifier = Modifier.fillMaxWidth()
@@ -75,14 +66,12 @@ fun CopaCatarMatchInfo(match: MatchDomain, onNotificationClick: NotificationOnCl
 @Composable
 fun Notification(match: MatchDomain, onClick: NotificationOnClick) {
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-        val drawable = if (match.notificationEnabled) R.drawable.ic_notifications_active
+        val notificationIcon = if (match.notificationEnabled) R.drawable.ic_notifications_active
         else R.drawable.ic_notifications
 
         Image(
-            painter = painterResource(id = drawable),
-            modifier = Modifier.clickable {
-                onClick(match)
-            },
+            painter = painterResource(id = notificationIcon),
+            modifier = Modifier.clickable { onClick(match) },
             contentDescription = null
         )
     }
@@ -108,20 +97,20 @@ fun Teams(match: MatchDomain) {
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        CopaCatarTeamItem(team = match.team1)
+        TeamItem(team = match.team1)
 
         Text(
             text = "X",
-            modifier = Modifier.padding(end = 16.dp, start = 16.dp),
+            modifier = Modifier.padding(horizontal = 16.dp),
             style = MaterialTheme.typography.h6.copy(color = Color.White)
         )
 
-        CopaCatarTeamItem(team = match.team2)
+        TeamItem(team = match.team2)
     }
 }
 
 @Composable
-fun CopaCatarTeamItem(team: TeamDomain) {
+fun TeamItem(team: TeamDomain) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Text(
             text = team.flag,

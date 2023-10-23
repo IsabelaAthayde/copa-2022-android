@@ -1,9 +1,12 @@
-import me.dio.copa.catar.data.source.MatchesDataSource
+package me.dio.copa.catar.domain.usecase
 
-class DisableNotificationUseCase(
-    private val localDataSource: MatchesDataSource.Local
+import me.dio.copa.catar.domain.repositories.MatchesRepository
+import javax.inject.Inject
+
+class DisableNotificationUseCase @Inject constructor(
+    private val repository: MatchesRepository
 ) {
-    suspend fun disableNotificationForMatch(matchId: String) {
-        localDataSource.disableNotificationFor(matchId)
+    suspend operator fun invoke(id: String){
+        return repository.disableNotificationFor(id)
     }
 }
